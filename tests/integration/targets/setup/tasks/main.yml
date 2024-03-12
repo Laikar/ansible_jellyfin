@@ -1,0 +1,41 @@
+- name: Setup Jellyfin
+  laikar.jellyfin.setup:
+    jellyfin_url: "http://localhost:8096"
+    admin_user: admin
+    admin_password: admin123
+  register: setup_result    
+- name: Check the module returns what we expect
+  assert:
+    that:
+      - setup_result is changed
+- name: Get jellyfin_config
+  laikar.jellyfin.configuration_info:
+    jellyfin_url: "http://localhost:8096"
+    admin_user: admin
+    admin_password: admin123
+  register: config
+- name: Get jellyfin_config
+  laikar.jellyfin.network_info:
+    jellyfin_url: "http://localhost:8096"
+    admin_user: admin
+    admin_password: admin123
+  register: network_config
+- name: Check jellyfin config changes as expected
+  assert:
+    that:
+      - config.jellyfin_config.IsStartupWizardCompleted is true 
+      - config.jellyfin_config.UICulture == 'en-US'
+      - config.jellyfin_config.PreferredMetadataLanguage == 'en'
+      - config.jellyfin_config.MetadataCountryCode == 'EN' 
+      - network_config.network_config.EnableRemoteAccess is true 
+      - network_config.network_config.EnableUPnP is false   
+- name:  Setup jellyfin again
+  laikar.jellyfin.setup:
+    jellyfin_url: "http://localhost:8096"
+    admin_user: admin
+    admin_password: admin123
+  register: result
+- name: Check the module returns what we expect
+  assert:
+    that:
+      - result is not changed   
