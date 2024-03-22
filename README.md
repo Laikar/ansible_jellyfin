@@ -3,17 +3,19 @@
 WIP Ansible colletion for managing a Jellyfin instance.
 
 Currently working:
-
- - Nothing (maybe something)
+ - Initial Setup (Including testing)
 
 Goals for first release:
- - Completing setup
- - Creating api keys   
- - Creating libraries
- - tests for implemented features
+ - Perform the initial setup
+ - Management of  api keys   
+ - Management of libraries
+ - Integration tests for implemented features
  
 Goals for 1.0
  - Configure transcoding
  - Configure ldap plugin
- - tests for everything
- - More to come
+ - integration and unit tests for everything
+
+
+Someday but no in roadmap goals
+ - Configure SSO plugin

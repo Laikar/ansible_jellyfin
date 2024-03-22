@@ -1,7 +1,7 @@
 from result import Err, Ok, Result
 from .jellyfin_api_client.api.startup import update_startup_user, get_first_user, update_initial_configuration, complete_wizard, set_remote_access
 from .jellyfin_api_client.models import StartupConfigurationDto, StartupRemoteAccessDto, StartupUserDto
-
+from .jellyfin_api_client.api.system  import get_public_system_info
 
 def setup_completed(client) -> Result[bool, str]:
     system_info_response  = get_public_system_info.sync_detailed(client=client)

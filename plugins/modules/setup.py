@@ -155,7 +155,8 @@ def action(params) -> Result[Dict, str]:
             version = params['client_version']) as client:
         if not server_reachable(client=client):
             return Err('Jellyfin server is not reachable')
-        if setup_completed(client=client):
+        if setup_completed(client=client).unwrap():
+
             #!TODO: Update server settings even when initial setup has already been done
             return Ok({'changed': False})
         match setup(client=client, 
@@ -194,7 +195,7 @@ def run_module():
 
     match action(module.params):
         case Ok(result):
-            module.exit_json(**result)
+            module.exit_json(**result.unwrap())
         case Err(e):
             module.fail_json(msg=e, changed=False, failed=True)
 
